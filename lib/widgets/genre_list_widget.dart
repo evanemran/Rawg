@@ -44,10 +44,12 @@ class _GenreListWidgetState extends State<GenreListWidget> {
           List<GenreResults> list = (snapshot.data!.results) as List<GenreResults>;
           return Expanded(
             child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    childAspectRatio: MediaQuery.of(context).size.width /
-                    (MediaQuery.of(context).size.height / 4)),
+                    crossAxisSpacing: 2.0,
+                    mainAxisSpacing: 2.0,
+                    /*childAspectRatio: MediaQuery.of(context).size.width /
+                    (MediaQuery.of(context).size.height / 4)*/),
                 itemCount: list.length,
                 shrinkWrap: true,
                 scrollDirection: Axis.vertical,

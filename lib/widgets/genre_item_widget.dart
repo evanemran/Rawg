@@ -15,7 +15,28 @@ class GenreWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final double itemHeight = (size.height - kToolbarHeight*2) / 4;
-    return Card(color: Colors.black,child: Stack(
+    return Card(color: Colors.black,
+      child: Container(
+        padding: const EdgeInsets.all(0.0),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage(image.toString()),
+            fit: BoxFit.cover,
+          ),
+          borderRadius:
+          const BorderRadius.all(Radius.circular(8.0),),
+        ),
+        child: Container(
+          height: double.maxFinite,
+          width: double.maxFinite,
+          color: Colors.black38,
+          child: Center(child: Text(title,
+            style: const TextStyle(color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,),),),
+        ),
+      ),
+      /*child: Stack(
       children: [
         FadeInImage.memoryNetwork(
           image: image.toString(),
@@ -31,6 +52,6 @@ class GenreWidget extends StatelessWidget {
         Positioned(bottom: 0, right: 0,
             child: Row(children: [Expanded(child: Text(title, style: const TextStyle(fontSize: 14, color: Colors.red, backgroundColor: Colors.black26), overflow: TextOverflow.ellipsis),)],))
       ],
-    ),);
+    ),*/);
   }
 }
