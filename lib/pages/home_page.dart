@@ -1,24 +1,13 @@
-import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gamezone/network/manager.dart';
+import 'package:gamezone/ViewModels/DrawerMenu.dart';
 
 import '../models/Album.dart';
+import '../widgets/drawer_widget.dart';
 import '../widgets/game_list_widget.dart';
 import '../widgets/genre_list_widget.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -34,12 +23,19 @@ class _MyHomePageState extends State<MyHomePage> {
   Color item3color = Colors.grey;
   Color item4color = Colors.grey;
 
-
   static const List<Widget> _bottomMenu = <Widget>[
     GameListWidget(),
     GenreListWidget(),
     Text("test3"),
     Text("test4"),
+  ];
+
+  final List<DrawerMenu> _drawerMenu = <DrawerMenu>[
+    DrawerMenu("Home", "Homepage", "assets/images/games.png", const Center(child: Text("Home"),)),
+    DrawerMenu("Platforms", "4 Items", "assets/images/games.png", const Center(child: Text("Platforms"),)),
+    DrawerMenu("Publishers", "165 Items", "assets/images/games.png", const Center(child: Text("Publishers"),)),
+    DrawerMenu("Developers", "500+ items", "assets/images/games.png", const Center(child: Text("Developers"),)),
+    DrawerMenu("Creators", "47 Items", "assets/images/games.png", const Center(child: Text("Creators"),)),
   ];
 
   @override
@@ -49,55 +45,68 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: IndexedStack(children: [
-        GameListWidget(),
-        GenreListWidget(),
-        Text("test3"),
-        Text("test4"),
-      ], index: _selectedIndex,),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _bottomMenu,
+      ),
       /*body: _bottomMenu.elementAt(_selectedIndex),*/
-        bottomNavigationBar: Theme(
-          data: Theme.of(context).copyWith(
-            // sets the background color of the `BottomNavigationBar`
-              canvasColor: Colors.black,
-              // sets the active color of the `BottomNavigationBar` if `Brightness` is light
-              primaryColor: Colors.black,
-          ),
-          child: BottomNavigationBar(
-            type: BottomNavigationBarType.shifting,
-            items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: ImageIcon(const AssetImage("assets/images/games.png"), color: item1color, size: 24,),
-                label: 'Games',
-              ),
-              BottomNavigationBarItem(
-                icon: ImageIcon(const AssetImage("assets/images/application.png"), color: item2color, size: 24,),
-                label: 'Genres',
-              ),
-              BottomNavigationBarItem(
-                icon: ImageIcon(const AssetImage("assets/images/like.png"), color: item3color, size: 24,),
-                label: 'Favorites',
-              ),
-              BottomNavigationBarItem(
-                icon: ImageIcon(const AssetImage("assets/images/store.png"), color: item4color, size: 24,),
-                label: 'Store',
-              ),
-            ],
-            currentIndex: _selectedIndex,
-            backgroundColor: Colors.white,
-            selectedItemColor: Colors.red,
-            showSelectedLabels: true,
-            selectedIconTheme: const IconThemeData(color: Colors.red),
-            unselectedIconTheme: const IconThemeData(color: Colors.grey),
-            onTap: _onItemTapped,
-          ),
+      bottomNavigationBar: Theme(
+        data: Theme.of(context).copyWith(
+          // sets the background color of the `BottomNavigationBar`
+          canvasColor: Colors.black,
+          // sets the active color of the `BottomNavigationBar` if `Brightness` is light
+          primaryColor: Colors.black,
         ),
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.shifting,
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: ImageIcon(
+                const AssetImage("assets/images/games.png"),
+                color: item1color,
+                size: 24,
+              ),
+              label: 'Games',
+            ),
+            BottomNavigationBarItem(
+              icon: ImageIcon(
+                const AssetImage("assets/images/application.png"),
+                color: item2color,
+                size: 24,
+              ),
+              label: 'Genres',
+            ),
+            BottomNavigationBarItem(
+              icon: ImageIcon(
+                const AssetImage("assets/images/like.png"),
+                color: item3color,
+                size: 24,
+              ),
+              label: 'Favorites',
+            ),
+            BottomNavigationBarItem(
+              icon: ImageIcon(
+                const AssetImage("assets/images/store.png"),
+                color: item4color,
+                size: 24,
+              ),
+              label: 'Store',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          backgroundColor: Colors.white,
+          selectedItemColor: Colors.red,
+          showSelectedLabels: true,
+          selectedIconTheme: const IconThemeData(color: Colors.red),
+          unselectedIconTheme: const IconThemeData(color: Colors.grey),
+          onTap: _onItemTapped,
+        ),
+      ),
+      drawer: DrawerWidget(menuList: _drawerMenu,),
       // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
@@ -105,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      switch(index) {
+      switch (index) {
         case 0:
           item1color = Colors.red;
           item2color = Colors.grey;

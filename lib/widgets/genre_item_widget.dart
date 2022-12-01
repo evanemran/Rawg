@@ -29,11 +29,12 @@ class GenreWidget extends StatelessWidget {
         child: Container(
           height: double.maxFinite,
           width: double.maxFinite,
-          color: Colors.black38,
+          color: Colors.black54,
           child: Center(child: Text(title,
             style: const TextStyle(color: Colors.white,
               fontSize: 18,
-              fontWeight: FontWeight.bold,),),),
+              fontFamily: 'Valorant',
+              fontWeight: FontWeight.bold,), textAlign: TextAlign.center,),),
         ),
       ),
       /*child: Stack(
