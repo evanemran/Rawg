@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamezone/models/GameListResponse.dart';
 import 'package:gamezone/models/Results.dart';
+import 'package:gamezone/pages/game_details_page.dart';
 import 'package:gamezone/styles/AppColors.dart';
 import 'package:transparent_image/transparent_image.dart';
 import '../network/manager.dart';
@@ -57,117 +58,107 @@ class _GameListWidgetState extends State<GameListWidget> {
                         Radius.circular(8.0),
                       ),
                     ),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                list[index].name.toString(),
-                                style: AppTheme.titleText,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => GameDetailPage(game: list[index],)));
+                      },
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  list[index].name.toString(),
+                                  style: AppTheme.titleText,
+                                ),
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                width: 150,
+                                height: 120,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: NetworkImage(
+                                        list[index].backgroundImage.toString()),
+                                    fit: BoxFit.cover,
+                                  ),
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(8.0),
+                                  ),
+                                ),
                               ),
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 150,
-                              height: 120,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      list[index].backgroundImage.toString()),
-                                  fit: BoxFit.cover,
-                                ),
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(8.0),
-                                ),
+                              const SizedBox(
+                                width: 8,
                               ),
-                              /*child: FadeInImage.memoryNetwork(
-                              image: list[index].backgroundImage.toString(),
-                              width: 150,
-                              height: 120,
-                              placeholder: kTransparentImage,
-                              imageErrorBuilder:
-                                  (context, error, stackTrace) {
-                                return Image.asset(
-                                    'assets/images/flag_placeholder.jpg',
-                                    width: 80,
-                                    height: 50,
-                                    fit: BoxFit.fitWidth);
-                              },
-                              fit: BoxFit.fitHeight,
-                            ),*/
-                            ),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            Expanded(
-                                child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                        child: Padding(
-                                      padding:
-                                          const EdgeInsets.fromLTRB(0, 8, 0, 8),
-                                      child: Text(
-                                        "Released: ${list[index].released}",
-                                        style: AppTheme.ntitleText,
-                                        textAlign: TextAlign.start,
+                              Expanded(
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                              child: Padding(
+                                                padding:
+                                                const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                                                child: Text(
+                                                  "Released: ${list[index].released}",
+                                                  style: AppTheme.ntitleText,
+                                                  textAlign: TextAlign.start,
+                                                ),
+                                              ))
+                                        ],
                                       ),
-                                    ))
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.star_border,
-                                      color: Colors.amber,
-                                      size: 16,
-                                    ),
-                                    Expanded(
-                                        child: Padding(
-                                      padding:
-                                          const EdgeInsets.fromLTRB(8, 8, 0, 8),
-                                      child: Text(
-                                        "${list[index].rating.toString()} / ${list[index].ratingTop.toString()}",
-                                        style: AppTheme.nbodyText,
-                                        textAlign: TextAlign.start,
+                                      Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.star_border,
+                                            color: Colors.amber,
+                                            size: 16,
+                                          ),
+                                          Expanded(
+                                              child: Padding(
+                                                padding:
+                                                const EdgeInsets.fromLTRB(8, 8, 0, 8),
+                                                child: Text(
+                                                  "${list[index].rating.toString()} / ${list[index].ratingTop.toString()}",
+                                                  style: AppTheme.nbodyText,
+                                                  textAlign: TextAlign.start,
+                                                ),
+                                              ))
+                                        ],
                                       ),
-                                    ))
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.access_time,
-                                      color: Colors.amber,
-                                      size: 14,
-                                    ),
-                                    Expanded(
-                                        child: Padding(
-                                      padding:
-                                          const EdgeInsets.fromLTRB(8, 8, 0, 8),
-                                      child: Text(
-                                        "Playtime: ${list[index].playtime.toString()}hrs",
-                                        style: AppTheme.nbodyText,
-                                        textAlign: TextAlign.start,
+                                      Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.access_time,
+                                            color: Colors.amber,
+                                            size: 14,
+                                          ),
+                                          Expanded(
+                                              child: Padding(
+                                                padding:
+                                                const EdgeInsets.fromLTRB(8, 8, 0, 8),
+                                                child: Text(
+                                                  "Playtime: ${list[index].playtime.toString()}hrs",
+                                                  style: AppTheme.nbodyText,
+                                                  textAlign: TextAlign.start,
+                                                ),
+                                              ))
+                                        ],
                                       ),
-                                    ))
-                                  ],
-                                ),
-                              ],
-                            ))
-                          ],
-                        )
-                      ],
+                                    ],
+                                  ))
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   );
                 },

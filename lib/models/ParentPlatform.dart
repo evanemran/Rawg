@@ -1,18 +1,21 @@
+import 'package:gamezone/models/Platform.dart';
 import 'package:gamezone/models/Ratings.dart';
 
+import 'PlatformChild.dart';
+
 class ParentPlatforms {
-  Platforms? platform;
+  PlatformChild? platform;
 
   ParentPlatforms({this.platform});
 
   ParentPlatforms.fromJson(Map<String, dynamic> json) {
     platform = json['platform'] != null
-        ? new Platforms.fromJson(json['platform'])
+        ? PlatformChild.fromJson(json['platform'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     if (this.platform != null) {
       data['platform'] = this.platform!.toJson();
     }
